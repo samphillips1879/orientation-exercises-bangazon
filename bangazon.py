@@ -343,6 +343,31 @@ class Employee(object):
 
 
 
+class Full_Time():
+  """Describes full-time employees"""
+
+  def __init__(self):
+    self.hours_per_week = 40
+
+
+
+class Part_Time():
+  """Describes part-time employees"""
+
+  def __init__(self):
+    self.hours_per_week = 24
+
+
+
+class Human_Resources_Employee(Employee, Full_Time):
+  """Describes human resources employees"""
+
+  def __init__(self, first_name, last_name):
+    # Note that we can't use super() any more because there is
+    # more than one class being inherited from. Because of that
+    # we have to call the constructor of each parent class individually
+    Employee.__init__(self, first_name, last_name)
+    Full_Time.__init__(self)
 
 
 
@@ -420,6 +445,17 @@ if __name__ == '__main__':
   Sam.eat(food="Truffles")
   Sam.eat(companions=[Allie, Hunter])
   Sam.eat("Watermelon", [Allie, Hunter])
+
+
+
+
+  ############################################################ bangazon_04
+
+
+  Bob = Human_Resources_Employee("Bob", "Barker")
+  print("Bob works {} hours per week".format(Bob.hours_per_week))
+
+
 
 
 
