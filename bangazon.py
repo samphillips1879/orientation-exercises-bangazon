@@ -24,6 +24,25 @@ class Department(object):
     return self.size
 
 
+  def meeting_notice(self, time, location="meeting room 1"):
+    '''Prints off a message for informing department members of an upcoming meeting
+    
+    Arguments: 
+      time (string)
+      location (string) (optional)
+    '''
+    print("Everyone please gather in {} at {} for a team meeting.".format(location, time))
+
+
+  def get_budget(self, budget=15000):
+    """Sets and returns the budget that a department gets each year. Can pass in an integer to set the budget to a value other than the default .
+
+    Arguments:
+      budget (integer) (optional)
+    """
+    self.annual_budget = budget
+    return self.annual_budget
+
 
 
 
@@ -35,7 +54,6 @@ class Human_Resources(Department):
   def __init__(self, name, supervisor, employee_count):
     super().__init__(name, supervisor, employee_count)
     self.policies = set()
-    # self.policies = {("test", "dis a test"), ("test number 2, yo", "meow")}
 
 
   def add_policy(self, policy_name, policy_text):
@@ -61,6 +79,24 @@ class Human_Resources(Department):
         return policy
 
     # return {policy for policy in self.policies if policy[0] == policy_name}
+
+  def meeting_notice(self, time):
+    '''Prints off a message for informing department members of an upcoming meeting
+    
+    Arguments: 
+      time (string)
+    '''
+    print("Everyone please gather in {}'s office at {} for a Human Resources team meeting.".format(self.get_supervisor(), time))
+
+
+  def get_budget(self, modifier= -10000):
+    """Returns the annual budget for this department. Can pass in an integer to change the budget modifier from the default value for this department.
+
+    Arguments:
+      modifier (integer) (optional)
+    """
+    self.annual_budget = super().get_budget() + modifier
+    return self.annual_budget
     
 
 
@@ -82,7 +118,7 @@ class Sales(Department):
 
     Arguments:
       product_name (string)
-      product_price (number)
+      product_price (integer)
     """
     self.products.add((product_name, product_price))
 
@@ -111,6 +147,23 @@ class Sales(Department):
   def get_products(self):
     return self.products
 
+  def meeting_notice(self, time):
+    '''Prints off a message for informing department members of an upcoming meeting
+    
+    Arguments: 
+      time (string)
+    '''
+    print("At {}, everyone please gather in the backroom for a {} team meeting.".format(time, self.get_name()))
+
+
+  def get_budget(self, modifier= 1):
+    """Returns the annual budget for this department. Can pass in an integer to change the budget modifier from the default value for this department.
+
+    Arguments:
+      modifier (integer) (optional)
+    """
+    self.annual_budget = super().get_budget() + modifier
+    return self.annual_budget
 
 
 
@@ -133,7 +186,7 @@ class Advertising(Department):
     Arguments:
       ad_product_name (string)
       ad_description (string)
-      ad_budget (number)
+      ad_budget (integer)
     """
     self.advertisements.add((ad_product_name, ad_description, ad_budget))
 
@@ -147,6 +200,24 @@ class Advertising(Department):
     for ad in self.advertisements:
       if ad[0] == product_name:
         return ad
+
+  def meeting_notice(self, time="immediately"):
+    '''Prints off a message for informing department members of an upcoming meeting
+    
+    Arguments: 
+      time (string) (optional)
+    '''
+    print("Get to {}'s office {} if you want to keep your job in Advertising!".format(self.get_supervisor(), time))
+
+
+  def get_budget(self, modifier= 2000):
+    """Returns the annual budget for this department. Can pass in an integer to change the budget modifier from the default value for this department.
+
+    Arguments:
+      modifier (integer) (optional)
+    """
+    self.annual_budget = super().get_budget() + modifier
+    return self.annual_budget
 
 
 
@@ -170,7 +241,7 @@ class Research_and_Development(Department):
     Arguments:
       concept_title (string)
       concept_description (string)
-      concept_budget (number)
+      concept_budget (integer)
     """
     self.concepts.add((concept_title, concept_description, concept_budget))
 
@@ -186,12 +257,31 @@ class Research_and_Development(Department):
         return concept
 
 
+  def meeting_notice(self, time):
+    '''Prints off a message for informing department members of an upcoming meeting
+    
+    Arguments: 
+      time (string)
+    '''
+    print("Everyone please be in the group video chat at {} for a R & D group meeting".format(time))
 
+
+  def get_budget(self, modifier= 99999999):
+    """Returns the annual budget for this department. Can pass in an integer to change the budget modifier from the default value for this department.
+
+    Arguments:
+      modifier (integer) (optional)
+    """
+    self.annual_budget = super().get_budget() + modifier
+    return self.annual_budget
 
 
 
 
 if __name__ == '__main__':
+
+
+  ########################################################### bangazon_01
 
   # Create some instances of each department.
   # Assign values to the properties of each.
@@ -222,6 +312,29 @@ if __name__ == '__main__':
   print(Sales.get_name())
   print(Ads.get_name())
   print(R_and_D.get_name())
+
+
+
+  ############################################################ bangazon_02
+
+
+
+  # Override
+
+  R_and_D.meeting_notice("2 AM")
+  Ads.meeting_notice()
+  Sales.meeting_notice("3 PM")
+  HR.meeting_notice("Noon")
+
+
+  # Override, but use parent
+
+
+  print(HR.get_budget())
+  print(Sales.get_budget())
+  print(Ads.get_budget())
+  print(R_and_D.get_budget())
+
 
 
 
