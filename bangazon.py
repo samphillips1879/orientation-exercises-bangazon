@@ -1,3 +1,7 @@
+import random
+
+
+
 class Department(object):
   """Parent class for all departments
 
@@ -7,6 +11,12 @@ class Department(object):
       self.name = name
       self.supervisor = supervisor
       self.size = employee_count
+      self.employees = set()
+
+
+  def add_employee(self, employee):
+    self.employees.add(employee)
+    self.size += 1
 
 
   def get_name(self):
@@ -278,6 +288,65 @@ class Research_and_Development(Department):
 
 
 
+
+
+
+
+
+# Create a new class to represent an Employee.
+# It's constructor should accept two parameters.
+# First name of employee
+# Last name of employee
+# Define a method named eat() that will allow it to be invoked with the following four signatures.
+
+# eat() - Will select a random restaurant name from a list of strings, print to console that the employee at at that restaurant, and also return the restaurant.
+# eat(food="sandwich") - Will output that the employee ate that specific food at the office.
+# eat(companions=[Sam, Dean, Alice]) - Will select a random restaurant name from a list of strings, print to console that the employee at that restaurant, and also output the first name of each employee in the specified list.
+# eat("pizza", [Sam, Dean, Alice]) - Will select a random restaurant name from a list of strings, print to console that the employee at that restaurant, and ordered the specified food, with the first name of the teammates specified in the list.
+
+# Note: Notice that this signature doesn't require that the parameters to be named
+
+class Employee(object):
+  """Class for representing an employee
+
+  Methods: __init__, eat
+  """
+
+  def __init__(self, first_name, last_name):
+    self.first_name = first_name
+    self.last_name = last_name
+
+    # if department != None
+    # self.department = department
+    # self.department.add_employee(self)
+
+
+
+  def eat(self, food=None, companions=None):
+    restaurants = ("Olive Garden", "McDonalds", "Gojo", "Kroger")
+    lunch_companions = ""
+    if food==None and companions==None:
+      print_statement = "{} {} ate at {}.".format(self.first_name, self.last_name, random.choice(restaurants))
+    if food!=None and companions==None:
+      print_statement = "{} ate {} at the office.".format(self.first_name, food)
+    if food==None and companions!=None:
+      for companion in companions:
+        lunch_companions += "{}, ".format(companion.first_name)
+      print_statement = "{} ate at {} with {}.".format(self.first_name, random.choice(restaurants), lunch_companions[0:-2])
+    if food!=None and companions!=None:
+      for companion in companions:
+        lunch_companions += "{}, ".format(companion.first_name)
+      print_statement = "{} went to {} with {} and ate {}.".format(self.first_name, random.choice(restaurants), lunch_companions[0:-2], food)
+
+
+    print(print_statement)
+
+
+
+
+
+
+
 if __name__ == '__main__':
 
 
@@ -286,22 +355,22 @@ if __name__ == '__main__':
   # Create some instances of each department.
   # Assign values to the properties of each.
 
-  HR = Human_Resources("Human Resources", "Bob", 2)
+  HR = Human_Resources("Human Resources", "Bob", 1)
   HR.add_policy("No Jerks", "If you are a jerk, you will be fired.")
   print(HR.get_policy("No Jerks"))
 
-  Sales = Sales("Sales", "Janette", 5)
+  Sales = Sales("Sales", "Janette", 1)
   Sales.add_product("Slinky", 6.00)
   Sales.add_product("Rubber Band Ball", 2.00)
   print("Products before removal: ", Sales.get_products())
   Sales.remove_product("Rubber Band Ball")
   print("Products after removal: ", Sales.get_products())
 
-  Ads = Advertising("Advertising", "Adolf", 1000000)
+  Ads = Advertising("Advertising", "Adolf", 1)
   Ads.new_advertisement("Slinky", "We need a high-budget spot to air during the superbowl that truly represents the power of the slinky", 9.99)
   print(Ads.get_advertisement("Slinky"))
 
-  R_and_D = Research_and_Development("Research & Development", "Santa", 99)
+  R_and_D = Research_and_Development("Research & Development", "Santa", 1)
   R_and_D.new_concept("The Levitating Toaster", "It's a toaster that levitates", 1234567.00)
   print(R_and_D.get_concept("The Levitating Toaster"))
 
@@ -334,6 +403,26 @@ if __name__ == '__main__':
   print(Sales.get_budget())
   print(Ads.get_budget())
   print(R_and_D.get_budget())
+
+
+
+
+
+
+
+  ############################################################ bangazon_03
+
+
+  Sam = Employee("Sam", "Phillips")
+  Allie = Employee("Allie", "Guillory")
+  Hunter = Employee("Hunter", "Bates")
+  Sam.eat()
+  Sam.eat(food="Truffles")
+  Sam.eat(companions=[Allie, Hunter])
+  Sam.eat("Watermelon", [Allie, Hunter])
+
+
+
 
 
 
