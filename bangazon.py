@@ -343,6 +343,60 @@ class Employee(object):
 
 
 
+class Full_Time(object):
+  """Describes full-time employees"""
+
+  def __init__(self):
+    self.hours_per_week = 40
+
+
+
+class Part_Time(object):
+  """Describes part-time employees"""
+
+  def __init__(self):
+    self.hours_per_week = 24
+    
+
+class Authorized_Employee(object):
+  """Describes employees with security authorization
+
+  Methods: get_authorization_level, set_authorization_level
+  """
+  def __init__(self, auth_level=0):
+    """Initializes employee's authorization level
+    
+    Arguments:
+      auth_level (integer 0 - 5) (optional)
+    """
+    self.authorization_level = auth_level
+
+  def get_authorization_level(self):
+    """Returns this employee's authorization level"""
+    return self.authorization_level
+
+  def set_authorization_level(self, new_auth_level):
+    """Changes employee's authorization level
+
+    Arguments: 
+      new_auth_level (integer 0 - 5)
+    """
+    self.authorization_level = new_auth_level
+
+
+class Human_Resources_Employee(Employee, Full_Time, Authorized_Employee):
+  """Describes human resources employees"""
+
+  def __init__(self, first_name, last_name):
+    # Note that we can't use super() any more because there is
+    # more than one class being inherited from. Because of that
+    # we have to call the constructor of each parent class individually
+    Employee.__init__(self, first_name, last_name)
+    Full_Time.__init__(self)
+    Authorized_Employee.__init__(self, 2)
+
+
+
 
 
 
@@ -420,6 +474,18 @@ if __name__ == '__main__':
   Sam.eat(food="Truffles")
   Sam.eat(companions=[Allie, Hunter])
   Sam.eat("Watermelon", [Allie, Hunter])
+
+
+
+
+  ############################################################ bangazon_04
+
+
+  Bob = Human_Resources_Employee("Bob", "Barker")
+  print("Bob works {} hours per week".format(Bob.hours_per_week))
+  print("{}'s authorization level is {}".format(Bob.first_name, Bob.authorization_level))
+
+
 
 
 
